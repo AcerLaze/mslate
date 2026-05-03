@@ -4,7 +4,8 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "compile": "bun build --compile ./index.ts --outfile ./mslate"
+    "compile": "bun build --compile ./index.ts --outfile ./out/mslate",
+    "compile:windows-x64": "bun build --compile --target=bun-windows-x64 ./index.ts --outfile ./out/mslate.exe"
   },
   "devDependencies": {
     "@types/bun": "latest"
