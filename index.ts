@@ -43,7 +43,6 @@ for (const key in inputJson) {
     to: options.target,
   }).then((translated) => {
     results[key] = translated.replaceAll("\"", "\\\"");
-    console.log(`Translated: "${inputJson[key]}" -> "${translated}"`);
   }).catch(err => {
     console.error(`Error translating key "${key}":`, err);
     failedTranslations.push(key);
