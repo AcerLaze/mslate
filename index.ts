@@ -33,16 +33,30 @@ const totalKeys = Object.keys(inputJson).length;
 
 console.log(`Translating ${totalKeys} keys from ${options.source} to ${options.target}...`);
 
+const failedTranslations: string[] = [];
+const translationPromises: Promise<void>[] = [];
+
+
 for (const key in inputJson) {
-  translate(inputJson[key], {
+  translationPromises.push(translate(inputJson[key], {
     from: options.source,
     to: options.target,
   }).then((translated) => {
-    results[key] = translated;
+    results[key] = translated.replaceAll("\"", "\\\"");
     console.log(`Translated: "${inputJson[key]}" -> "${translated}"`);
-  })
+  }).catch(err => {
+    console.error(`Error translating key "${key}":`, err);
+    failedTranslations.push(key);
+  }))
 }
+
+await Promise.all(translationPromises)
 
 fs.writeFileSync(options.output, JSON.stringify(results, null, 2), "utf-8");
 
 console.log(`Translation completed. Output saved to ${options.output}`);
+
+console.log(`Failed translations: ${failedTranslations.length}`);
+if (failedTranslations.length > 0) {
+  console.log(`- ${failedTranslations}`);
+}
