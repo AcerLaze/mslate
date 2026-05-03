@@ -1,0 +1,19 @@
+{
+  "name": "mslate",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "compile": "bun build --compile ./index.ts --outfile ./mslate"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "commander": "^14.0.3",
+    "translate": "^3.0.1"
+  }
+}
