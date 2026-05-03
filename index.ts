@@ -34,11 +34,13 @@ const totalKeys = Object.keys(inputJson).length;
 console.log(`Translating ${totalKeys} keys from ${options.source} to ${options.target}...`);
 
 for (const key in inputJson) {
-  console.log(`Translating key: "${key}"... `);
-  results[key] = await translate(inputJson[key], {
+  translate(inputJson[key], {
     from: options.source,
     to: options.target,
-  });
+  }).then((translated) => {
+    results[key] = translated;
+    console.log(`Translated: "${inputJson[key]}" -> "${translated}"`);
+  })
 }
 
 fs.writeFileSync(options.output, JSON.stringify(results, null, 2), "utf-8");
